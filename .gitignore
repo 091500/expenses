@@ -19,3 +19,7 @@
 #other files
 *.swp
 *~
+.project
+.DS_Store
+.idea
+.secret
