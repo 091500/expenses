@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @moneyrecord.name %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @moneyrecord.category_id %>
+</p>
+
+<%= link_to 'Edit', edit_moneyrecord_path(@moneyrecord) %> |
+<%= link_to 'Back', moneyrecords_path %>
