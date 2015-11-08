@@ -2,16 +2,15 @@ Rails.application.routes.draw do
   resources :moneyrecords
   resources :categories
   devise_for :users
-  get 'static_pages/home'
-
-  get 'static_pages/help'
+  get 'main_page/home'
+  get 'main_page/help'
 
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'static_pages#home'
+  root 'main_page#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

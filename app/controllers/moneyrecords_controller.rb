@@ -1,10 +1,16 @@
 class MoneyrecordsController < ApplicationController
   before_action :set_moneyrecord, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /moneyrecords
   # GET /moneyrecords.json
   def index
-    @moneyrecords = Moneyrecord.all
+    if params[:category_id]
+      category = Category.where(user_id: current_user.id).where(id: params[:category_id]).first
+      @moneyrecords = category.moneyrecords
+    else
+      @moneyrecords = Moneyrecord.where(category_id: current_user.categories {|i| i.id} )
+    end
   end
 
   # GET /moneyrecords/1
@@ -15,16 +21,23 @@ class MoneyrecordsController < ApplicationController
   # GET /moneyrecords/new
   def new
     @moneyrecord = Moneyrecord.new
+    @category_list = Category.all.map { |category| [category.name, category.id] }
+    @selected_category = params[:category_id].to_i if params[:category_id]
   end
 
   # GET /moneyrecords/1/edit
   def edit
+    @category_list = current_user.categories.map { |category| [category.name, category.id] }
+    @selected_category = @moneyrecord.category_id
   end
 
   # POST /moneyrecords
   # POST /moneyrecords.json
   def create
     @moneyrecord = Moneyrecord.new(moneyrecord_params)
+
+    @category_list = current_user.categories.map { |category| [category.name, category.id] }
+    @selected_category = @moneyrecord.category_id
 
     respond_to do |format|
       if @moneyrecord.save

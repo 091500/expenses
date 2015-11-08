@@ -5,12 +5,12 @@ describe "Static pages" do
   describe "Home page" do
 
     it "should have the content 'Sample App'" do
-      visit '/static_pages/home'
+      visit '/main_page/home'
       expect(page).to have_content('Sample App')
     end
 
     it "should not have a custom page title" do
-      visit '/static_pages/home'
+      visit '/main_page/home'
       expect(page).not_to have_title('| Home')
     end
   end
@@ -18,7 +18,7 @@ describe "Static pages" do
   describe "Help page" do
 
     it "should have the content 'Help'" do
-      visit '/static_pages/help'
+      visit '/main_page/help'
       expect(page).to have_content('Help')
     end
   end

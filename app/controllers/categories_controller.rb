@@ -1,10 +1,19 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
 
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    if params[:record_type]
+      @category = Category.where(record_type: params[:record_type], user_id: current_user.id).all
+    else
+      @category = Category.where(user_id: current_user.id).all
+    end
+  end
+
+  def category_incomes
+
   end
 
   # GET /categories/1
@@ -15,16 +24,26 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
+
+    @record_types = [['Income', 1], ['Expense', 0]]
+    @selected_record_type = params[:record_type]
   end
 
   # GET /categories/1/edit
   def edit
+    @record_types = [['Income', 1], ['Expense', 0]]
+    @selected_record_type = @category.record_type
+
   end
 
   # POST /categories
   # POST /categories.json
   def create
     @category = Category.new(category_params)
+
+    @category.user = current_user
+    @record_types = [['Income', 1], ['Expense', 0]]
+    @selected_record_type = 1
 
     respond_to do |format|
       if @category.save
