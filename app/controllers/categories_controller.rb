@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
+  before_filter :require_permission, only: [:show, :edit, :update, :destroy]
 
   # GET /categories
   # GET /categories.json
@@ -90,4 +91,12 @@ class CategoriesController < ApplicationController
     def category_params
       params.require(:category).permit(:name, :record_type, :user_id)
     end
+
+    # Do action only for current user
+    def require_permission
+      if current_user.id != @category.user_id
+        redirect_to root_path
+      end
+    end
+
 end

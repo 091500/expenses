@@ -1,3 +1,5 @@
+<% sum_income = 0 %>
+<% sum_expense = 0 %>
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Moneyrecords</h1>
@@ -9,6 +11,7 @@
       <th>Category</th>
       <th>Type</th>
       <th>Amount</th>
+      <th>Date</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,11 +23,19 @@
         <td><%= moneyrecord.category.name %></td>
         <td><%= moneyrecord.category.record_type == 1 ? 'Income' : 'Expense' %></td>
         <td><%= moneyrecord.amount %></td>
+        <td><%= moneyrecord.created_at %></td>
         <td><%= link_to 'Show', moneyrecord %></td>
         <td><%= link_to 'Edit', edit_moneyrecord_path(moneyrecord) %></td>
         <td><%= link_to 'Destroy', moneyrecord, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <% sum_income += moneyrecord.amount if moneyrecord.category.record_type == 1 and !moneyrecord.amount.nil? %>
+      <% sum_expense += moneyrecord.amount if moneyrecord.category.record_type == 0 and !moneyrecord.amount.nil? %>
     <% end %>
+      <tr>
+        <td colspan="3">Balance</td>
+        <td><%= sum_income-sum_expense %></td>
+        <td colspan="4"></td>
+      </tr>
   </tbody>
 </table>
 

@@ -2,6 +2,7 @@ class MoneyrecordsController < ApplicationController
   before_action :set_moneyrecord, only: [:show, :edit, :update, :destroy]
   before_action :set_category_list
   before_filter :authenticate_user!
+  before_filter :require_permission, only: [:show, :edit, :update, :destroy]
 
   # GET /moneyrecords
   # GET /moneyrecords.json
@@ -85,4 +86,12 @@ class MoneyrecordsController < ApplicationController
     def moneyrecord_params
       params.require(:moneyrecord).permit(:name, :category_id, :created_at, :amount)
     end
+
+    # Do action only for current user
+    def require_permission
+      if current_user.id != @moneyrecord.category.user_id
+        redirect_to root_path
+      end
+    end
+
 end
