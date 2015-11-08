@@ -1,5 +1,6 @@
 class MoneyrecordsController < ApplicationController
   before_action :set_moneyrecord, only: [:show, :edit, :update, :destroy]
+  before_action :set_category_list
   before_filter :authenticate_user!
 
   # GET /moneyrecords
@@ -21,13 +22,11 @@ class MoneyrecordsController < ApplicationController
   # GET /moneyrecords/new
   def new
     @moneyrecord = Moneyrecord.new
-    @category_list = Category.all.map { |category| [category.name, category.id] }
     @selected_category = params[:category_id].to_i if params[:category_id]
   end
 
   # GET /moneyrecords/1/edit
   def edit
-    @category_list = current_user.categories.map { |category| [category.name, category.id] }
     @selected_category = @moneyrecord.category_id
   end
 
@@ -35,9 +34,6 @@ class MoneyrecordsController < ApplicationController
   # POST /moneyrecords.json
   def create
     @moneyrecord = Moneyrecord.new(moneyrecord_params)
-
-    @category_list = current_user.categories.map { |category| [category.name, category.id] }
-    @selected_category = @moneyrecord.category_id
 
     respond_to do |format|
       if @moneyrecord.save
@@ -80,8 +76,13 @@ class MoneyrecordsController < ApplicationController
       @moneyrecord = Moneyrecord.find(params[:id])
     end
 
+    # Set categories for user
+    def set_category_list
+      @category_list = current_user.categories.map { |category| [category.name, category.id] }
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def moneyrecord_params
-      params.require(:moneyrecord).permit(:name, :category_id)
+      params.require(:moneyrecord).permit(:name, :category_id, :created_at, :amount)
     end
 end

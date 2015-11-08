@@ -16,6 +16,14 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :created_at %><br>
+    <%= f.date_field :created_at %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
     <%= f.label :category_id %><br>
     <%= f.select(:category_id, options_for_select(@category_list, @selected_category)) %>
   </div>

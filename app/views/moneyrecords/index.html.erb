@@ -8,6 +8,7 @@
       <th>Comment</th>
       <th>Category</th>
       <th>Type</th>
+      <th>Amount</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= moneyrecord.name %></td>
         <td><%= moneyrecord.category.name %></td>
         <td><%= moneyrecord.category.record_type == 1 ? 'Income' : 'Expense' %></td>
+        <td><%= moneyrecord.amount %></td>
         <td><%= link_to 'Show', moneyrecord %></td>
         <td><%= link_to 'Edit', edit_moneyrecord_path(moneyrecord) %></td>
         <td><%= link_to 'Destroy', moneyrecord, method: :delete, data: { confirm: 'Are you sure?' } %></td>
