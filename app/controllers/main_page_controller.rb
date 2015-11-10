@@ -1,7 +1,7 @@
 class MainPageController < ApplicationController
-  before_filter :authenticate_user!
 
   def home
+    redirect_to moneyrecords_path if user_signed_in?
   end
 
   def help

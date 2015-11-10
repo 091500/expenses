@@ -1,7 +1,7 @@
 class MoneyrecordsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_moneyrecord, only: [:show, :edit, :update, :destroy]
   before_action :set_category_list
-  before_filter :authenticate_user!
   before_filter :require_permission, only: [:show, :edit, :update, :destroy]
 
   # GET /moneyrecords
