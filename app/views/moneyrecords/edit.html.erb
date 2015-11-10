@@ -1,6 +1,19 @@
-<h1>Editing Moneyrecord</h1>
+<% content_for :main_content do %>
 
-<%= render 'form' %>
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Edit record</div>
 
-<%= link_to 'Show', @moneyrecord %> |
-<%= link_to 'Back', moneyrecords_path %>
+    <div class="panel-body">
+
+      <%= render 'form' %>
+
+    </div>
+
+  </div>
+
+  <%= link_to 'Back', moneyrecords_path, class: 'btn btn-sm btn-primary' %>
+
+<% end %>
+
+<%= render 'layouts/userarea' %>

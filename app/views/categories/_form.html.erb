@@ -1,29 +1,9 @@
-<%= form_for(@category) do |f| %>
-  <% if @category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
+<%= bootstrap_form_for @category do |f| %>
 
-      <ul>
-      <% @category.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= f.alert_message 'Please fix the errors below:' %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :record_type %><br>
-    <%= f.select(:record_type, options_for_select(@record_types, @selected_record_type)) %>
-  </div>
-  <!--div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div-->
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.text_field :name, class: 'form-control', placeholder: 'Category name' %>
+  <%= f.select(:record_type, options_for_select(@record_types, @selected_record_type)) %>
+  <%= f.submit 'Submit' %>
+
 <% end %>

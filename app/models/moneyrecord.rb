@@ -1,6 +1,7 @@
 class Moneyrecord < ActiveRecord::Base
   validates :name, presence: false
   validates :amount, :numericality => { only_integer: true, greater_than: 0 }
+  validates :category_id, presence: true
   validate :created_at_future
 
   belongs_to :category

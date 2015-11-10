@@ -1,31 +1,45 @@
-<p id="notice"><%= notice %></p>
+<% content_for :main_content do %>
 
-<h1>Listing Categories</h1>
+  <% if @category.empty? %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="alert alert-info" role="alert">
+      You don't have any category. Fell free to add one.
+    </div>
 
-  <tbody>
-    <% @category.each do |category| %>
-      <tr>
-        <td><%= link_to category.name, controller: 'moneyrecords', action: 'index', category_id: category.id %></td>
-        <% category_type = category.record_type == 1 ? 'Income' : 'Expense' %>
-          <td><%= category_type %></td>
-        <td><%= link_to 'Add new record', controller: 'moneyrecords', action: 'new', category_id: category.id %>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <% else %>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><%= params[:record_type] == '1' ? 'Incomes' : 'Expenses' %> categories</div>
 
-<br>
+      <!-- Table -->
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th colspan="4"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @category.each do |category| %>
+          <tr>
+            <td><%= link_to category.name, controller: 'moneyrecords', action: 'index', category_id: category.id %></td>
+            <% category_type = category.record_type == 1 ? 'Income' : 'Expense' %>
+            <td><%= category_type %></td>
+            <td><%= link_to 'Add new record', controller: 'moneyrecords', action: 'new', category_id: category.id %>
+            <td><%= link_to 'Show', category %></td>
+            <td><%= link_to 'Edit', edit_category_path(category) %></td>
+            <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
 
-<%= link_to 'New Category', controller: 'categories', action: 'new', record_type: params[:record_type] %>
+  <% end %>
+
+    <%= link_to 'New Category', { controller: 'categories', action: 'new', record_type: params[:record_type] }, class: 'btn btn-sm btn-primary' %>
+
+<% end %>
+
+<%= render 'layouts/userarea' %>

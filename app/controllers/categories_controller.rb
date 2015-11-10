@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_record_types
   before_filter :authenticate_user!
   before_filter :require_permission, only: [:show, :edit, :update, :destroy]
 
@@ -13,10 +14,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def category_incomes
-
-  end
-
   # GET /categories/1
   # GET /categories/1.json
   def show
@@ -25,16 +22,12 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
-
-    @record_types = [['Income', 1], ['Expense', 0]]
-    @selected_record_type = params[:record_type]
+    @selected_record_type = params[:record_type].to_i
   end
 
   # GET /categories/1/edit
   def edit
-    @record_types = [['Income', 1], ['Expense', 0]]
     @selected_record_type = @category.record_type
-
   end
 
   # POST /categories
@@ -43,7 +36,6 @@ class CategoriesController < ApplicationController
     @category = Category.new(category_params)
 
     @category.user = current_user
-    @record_types = [['Income', 1], ['Expense', 0]]
     @selected_record_type = 1
 
     respond_to do |format|
@@ -85,6 +77,10 @@ class CategoriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_category
       @category = Category.find(params[:id])
+    end
+
+    def set_record_types
+      @record_types = [['Income', 1], ['Expense', 0]]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

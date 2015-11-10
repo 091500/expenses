@@ -1,19 +1,28 @@
-<p id="notice"><%= notice %></p>
+<% content_for :main_content do %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @category.name %>
-</p>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Category</div>
 
-<p>
-  <strong>Record type:</strong>
-  <%= @category.record_type %>
-</p>
+      <div class="panel-body">
 
-<p>
-  <strong>User:</strong>
-  <%= @category.user_id %>
-</p>
+        <p>
+          <strong>Name:</strong>
+          <%= @category.name %>
+        </p>
 
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+        <p>
+          <strong>Type:</strong>
+          <%= @category.record_type == 1 ? 'Income' : 'Expense' %>
+        </p>
+
+      </div>
+
+    </div>
+
+    <%= link_to 'Edit', edit_category_path(@category), class: 'btn btn-sm btn-primary' %>
+    <%= link_to 'Back', categories_path, class: 'btn btn-sm btn-primary' %>
+
+<% end %>
+
+<%= render 'layouts/userarea' %>

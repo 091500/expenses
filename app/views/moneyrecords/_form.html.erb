@@ -1,33 +1,11 @@
-<%= form_for(@moneyrecord) do |f| %>
-  <% if @moneyrecord.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@moneyrecord.errors.count, "error") %> prohibited this moneyrecord from being saved:</h2>
+<%= bootstrap_form_for @moneyrecord do |f| %>
 
-      <ul>
-      <% @moneyrecord.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <%= f.alert_message 'Please fix the errors below:' %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :created_at %><br>
+    <%= f.text_field :name, placeholder: 'Add some description ', label: 'Comment' %>
     <%= f.date_field :created_at %>
-  </div>
-  <div class="field">
-    <%= f.label :amount %><br>
     <%= f.text_field :amount %>
-  </div>
-  <div class="field">
-    <%= f.label :category_id %><br>
     <%= f.select(:category_id, options_for_select(@category_list, @selected_category)) %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= f.submit 'Submit' %>
+
 <% end %>

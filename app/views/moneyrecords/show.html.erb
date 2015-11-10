@@ -1,14 +1,43 @@
-<p id="notice"><%= notice %></p>
+<% content_for :main_content do %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @moneyrecord.name %>
-</p>
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Finance record</div>
 
-<p>
-  <strong>Category:</strong>
-  <%= @moneyrecord.category_id %>
-</p>
+      <div class="panel-body">
 
-<%= link_to 'Edit', edit_moneyrecord_path(@moneyrecord) %> |
-<%= link_to 'Back', moneyrecords_path %>
+        <p>
+          <strong>Name:</strong>
+          <%= @moneyrecord.name %>
+        </p>
+
+        <p>
+          <strong>Type:</strong>
+          <%= @moneyrecord.category.record_type == 1 ? 'Income' : 'Expense' %>
+        </p>
+
+        <p>
+          <strong>Category:</strong>
+          <%= @moneyrecord.category.name %>
+        </p>
+
+        <p>
+          <strong>Amount:</strong>
+          <%= @moneyrecord.amount %>
+        </p>
+
+        <p>
+          <strong>Added:</strong>
+          <%= @moneyrecord.created_at %>
+        </p>
+
+      </div>
+
+    </div>
+
+    <%= link_to 'Edit', edit_moneyrecord_path(@moneyrecord), class: 'btn btn-sm btn-primary' %>
+    <%= link_to 'Back', moneyrecords_path, class: 'btn btn-sm btn-primary' %>
+
+<% end %>
+
+<%= render 'layouts/userarea' %>
