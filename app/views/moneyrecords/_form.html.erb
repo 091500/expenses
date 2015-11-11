@@ -3,7 +3,7 @@
     <%= f.alert_message 'Please fix the errors below:' %>
 
     <%= f.text_field :name, placeholder: 'Add some description ', label: 'Comment' %>
-    <%= f.date_field :created_at %>
+    <%= f.date_field :made_at, max: Date.today %>
     <%= f.text_field :amount %>
     <%= f.select(:category_id, options_for_select(@category_list, @selected_category)) %>
     <%= f.submit 'Submit' %>

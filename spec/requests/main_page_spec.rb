@@ -19,14 +19,3 @@ describe 'Static pages' do
 
 end
 
-describe 'the signin process', type: feature do
-
-  it 'signs me in' do
-    visit '/users/sign_in'
-    fill_in 'Email', with: 'test@example.com'
-    fill_in 'Password', with: '12345678'
-    click_button 'Log in'
-    expect(page).to have_content 'Signed'
-  end
-end
-

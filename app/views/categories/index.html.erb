@@ -10,7 +10,12 @@
   <% else %>
     <div class="panel panel-default">
       <!-- Default panel contents -->
-      <div class="panel-heading"><%= params[:record_type] == '1' ? 'Incomes' : 'Expenses' %> categories</div>
+      <div class="panel-heading clearfix">
+        <h3 class="panel-title pull-left"><%= params[:record_type] == '1' ? 'Income' : 'Expense' %> categories</h3>
+        <%= link_to 'New Category', { controller: 'categories', action: 'new', record_type: params[:record_type] },
+                    class: 'btn btn-sm btn-primary pull-right' %>
+
+      </div>
 
       <!-- Table -->
       <table class="table table-striped">
@@ -38,8 +43,6 @@
     </div>
 
   <% end %>
-
-    <%= link_to 'New Category', { controller: 'categories', action: 'new', record_type: params[:record_type] }, class: 'btn btn-sm btn-primary' %>
 
 <% end %>
 

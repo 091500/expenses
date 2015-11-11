@@ -7,18 +7,23 @@ class MoneyrecordsController < ApplicationController
   # GET /moneyrecords
   # GET /moneyrecords.json
   def index
-    if params[:date_from] or params[:date_to]
-      date_from = params[:date_from] ? params[:date_from] : 0
-      date_to = params[:date_to] ? params[:date_to] : Date.today
+    if params[:date_from].present? or params[:date_to].present?
+      date_from = params[:date_from].present? ? params[:date_from] : 0
+      date_to = params[:date_to].present? ? params[:date_to] : Date.today
       @moneyrecords = Moneyrecord
                           .where(category_id: current_user.categories {|i| i.id})
-                          .where('created_at BETWEEN ? AND ?', date_from, date_to)
+                          .where('made_at >= ? AND made_at <= ?', date_from.to_time, date_to.to_time + 1.days)
+                          .order(made_at: :desc)
     else
-      if params[:category_id]
-        category = Category.where(user_id: current_user.id).where(id: params[:category_id]).first
-        @moneyrecords = category.moneyrecords
+      if params[:category_id].present?
+        category = Category
+                       .where(user_id: current_user.id)
+                       .where(id: params[:category_id]).first
+        @moneyrecords = category.moneyrecords.order(made_at: :desc)
       else
-        @moneyrecords = Moneyrecord.where(category_id: current_user.categories {|i| i.id})
+        @moneyrecords = Moneyrecord
+                            .where(category_id: current_user.categories {|i| i.id})
+                            .order(made_at: :desc)
       end
     end
 
@@ -44,6 +49,7 @@ class MoneyrecordsController < ApplicationController
   # POST /moneyrecords.json
   def create
     @moneyrecord = Moneyrecord.new(moneyrecord_params)
+    @moneyrecord.made_at = Date.today
 
     respond_to do |format|
       if @moneyrecord.save
@@ -88,12 +94,16 @@ class MoneyrecordsController < ApplicationController
 
     # Set categories for user
     def set_category_list
-      @category_list = current_user.categories.map { |category| [category.name, category.id] }
+      if params[:category_id].present?
+        @category_list = current_user.categories.where(id: params[:category_id]).map { |category| [category.name, category.id] }
+      else
+        @category_list = current_user.categories.map { |category| [category.name, category.id] }
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def moneyrecord_params
-      params.require(:moneyrecord).permit(:name, :category_id, :created_at, :amount, :date_from, :date_to)
+      params.require(:moneyrecord).permit(:name, :category_id, :made_at, :amount, :date_from, :date_to)
     end
 
     # Do action only for current user
