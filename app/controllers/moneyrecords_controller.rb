@@ -7,12 +7,21 @@ class MoneyrecordsController < ApplicationController
   # GET /moneyrecords
   # GET /moneyrecords.json
   def index
-    if params[:category_id]
-      category = Category.where(user_id: current_user.id).where(id: params[:category_id]).first
-      @moneyrecords = category.moneyrecords
+    if params[:date_from] or params[:date_to]
+      date_from = params[:date_from] ? params[:date_from] : 0
+      date_to = params[:date_to] ? params[:date_to] : Date.today
+      @moneyrecords = Moneyrecord
+                          .where(category_id: current_user.categories {|i| i.id})
+                          .where('created_at BETWEEN ? AND ?', date_from, date_to)
     else
-      @moneyrecords = Moneyrecord.where(category_id: current_user.categories {|i| i.id} )
+      if params[:category_id]
+        category = Category.where(user_id: current_user.id).where(id: params[:category_id]).first
+        @moneyrecords = category.moneyrecords
+      else
+        @moneyrecords = Moneyrecord.where(category_id: current_user.categories {|i| i.id})
+      end
     end
+
   end
 
   # GET /moneyrecords/1
@@ -84,7 +93,7 @@ class MoneyrecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def moneyrecord_params
-      params.require(:moneyrecord).permit(:name, :category_id, :created_at, :amount)
+      params.require(:moneyrecord).permit(:name, :category_id, :created_at, :amount, :date_from, :date_to)
     end
 
     # Do action only for current user

@@ -1,9 +1,10 @@
+<% provide(:title, 'Money records') %>
 <% content_for :main_content do %>
 
   <% if @moneyrecords.empty? %>
 
       <div class="alert alert-info" role="alert">
-        You don't have any records. Feel free to add one.
+        No records found
       </div>
 
   <% else %>
@@ -54,7 +55,7 @@
 
   <% end %>
 
-  <%= link_to 'Add new record', new_moneyrecord_path, class: 'btn btn-sm btn-primary' %>
+  <%= link_to 'Add new record', new_moneyrecord_path, class: 'btn btn-primary' %>
 
 <% end %>
 
