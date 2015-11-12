@@ -10,6 +10,7 @@
 
         <%= f.text_field :date_from, value: params[:date_from].present? ? params[:date_from] : (Date.today-1.month).strftime('%Y-%m-%d'), class: 'date-picker' %>
         <%= f.text_field :date_to, value: params[:date_to].present? ? params[:date_to] : (Date.today+1.day).strftime('%Y-%m-%d'), class: 'date-picker' %>
+        <%= f.select(:category_id, options_for_select(current_user.categories.map { |category| [category.name, category.id] }, params[:category_id]), include_blank: 'All') %>
 
         <%= f.submit 'Search' %>
 

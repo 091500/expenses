@@ -11,7 +11,7 @@ class MoneyrecordsController < ApplicationController
       date_from = params[:date_from].present? ? params[:date_from] : 0
       date_to = params[:date_to].present? ? params[:date_to] : Date.today
       @moneyrecords = Moneyrecord
-                          .where(category_id: current_user.categories {|i| i.id})
+                          .where(category_id: params[:category_id].present? ? params[:category_id] : current_user.categories {|i| i.id})
                           .where('made_at >= ? AND made_at <= ?', date_from.to_time, date_to.to_time + 1.days)
                           .order(made_at: :desc)
     else

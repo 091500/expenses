@@ -38,7 +38,7 @@
         <% @moneyrecords.each do |moneyrecord| %>
           <tr>
             <td><%= moneyrecord.name %></td>
-            <td><%= moneyrecord.category.name %></td>
+            <td><%= link_to moneyrecord.category.name, controller: 'moneyrecords', action: 'index', category_id: moneyrecord.category.id %></td>
             <td><%= moneyrecord.category.record_type == 1 ? 'Income' : 'Expense' %></td>
             <td><%= moneyrecord.amount %></td>
             <td><%= moneyrecord.made_at %></td>
