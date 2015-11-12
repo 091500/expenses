@@ -21,7 +21,7 @@ bundle exec rspec spec/features/sessions_spec.rb
 
 ## Demo
 
-[here](https://vast-earth-2814.herokuapp.com/)
+[here](http://vast-earth-2814.herokuapp.com/)
 
 
 ---
