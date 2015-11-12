@@ -4,10 +4,14 @@
 
     <%= f.text_field :name, placeholder: 'Add some description ', label: 'Comment' %>
     <% if !@moneyrecord.new_record? %>
-      <%= f.text_field :made_at, class: 'date-picker' %>
+      <%= f.text_field :made_at, value: @moneyrecord.made_at.strftime('%F'), class: 'date-picker' %>
     <% end %>
     <%= f.text_field :amount %>
     <%= f.select(:category_id, options_for_select(@category_list, @selected_category)) %>
     <%= f.submit 'Submit' %>
 
 <% end %>
+
+<script>
+  $('.date-picker').datetimepicker({format: 'YYYY-MM-DD'})
+</script>
