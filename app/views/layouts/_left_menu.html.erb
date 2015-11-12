@@ -1,8 +1,12 @@
 <div class="list-group">
+  <li class="list-group-item">
+    <span class="badge"><%= current_user_balance %></span>
+    <b>Your current balance</b>
+  </li>
   <%= link_to 'Income categories', { controller: 'categories', action: 'index', record_type: 1 }, class: 'list-group-item' %>
   <%= link_to 'Expense categories', { controller: 'categories', action: 'index', record_type: 0 }, class: 'list-group-item' %>
   <%= link_to 'Reports', moneyrecords_path, class: 'list-group-item' %>
 </div>
-<%= link_to 'Add new money record', new_moneyrecord_path, class: 'btn btn-primary' %>
 
+<%= link_to 'Add new finance record', new_moneyrecord_path, class: 'btn btn-primary' %>
 
