@@ -7,7 +7,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    if params[:record_type]
+    if params[:record_type].present?
       @category = Category.where(record_type: params[:record_type], user_id: current_user.id).all
     else
       @category = Category.where(user_id: current_user.id).all

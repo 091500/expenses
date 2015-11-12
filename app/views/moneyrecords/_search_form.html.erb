@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+
+  <!-- Default panel contents -->
+  <div class="panel-heading clearfix">
+    <h3 class="panel-title pull-left">Search records</h3>
+  </div>
+
+  <div class="panel-body">
+    <%= bootstrap_form_tag url: moneyrecords_path, method: 'get', layout: :inline do |f| %>
+
+        <%= f.text_field :date_from, value: params[:date_from].present? ? params[:date_from] : (Date.today-1.month).strftime('%Y-%m-%d'), class: 'date-picker' %>
+        <%= f.text_field :date_to, value: params[:date_to].present? ? params[:date_to] : (Date.today+1.day).strftime('%Y-%m-%d'), class: 'date-picker' %>
+
+        <%= f.submit 'Search' %>
+
+        <%= f.static_control hide_label: true do %>
+            <%= link_to 'Clear form', moneyrecords_path, class: 'btn btn-default' %>
+        <% end %>
+
+    <% end %>
+  </div>
+
+</div>

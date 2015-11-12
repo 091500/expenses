@@ -18,12 +18,15 @@ class MoneyrecordsController < ApplicationController
       if params[:category_id].present?
         category = Category
                        .where(user_id: current_user.id)
-                       .where(id: params[:category_id]).first
+                       .where(id: params[:category_id])
+                       .first
+
         @moneyrecords = category.moneyrecords.order(made_at: :desc)
       else
         @moneyrecords = Moneyrecord
                             .where(category_id: current_user.categories {|i| i.id})
                             .order(made_at: :desc)
+                            .take(100)
       end
     end
 
@@ -37,7 +40,7 @@ class MoneyrecordsController < ApplicationController
   # GET /moneyrecords/new
   def new
     @moneyrecord = Moneyrecord.new
-    @selected_category = params[:category_id].to_i if params[:category_id]
+    @selected_category = params[:category_id].to_i if params[:category_id].present?
   end
 
   # GET /moneyrecords/1/edit
