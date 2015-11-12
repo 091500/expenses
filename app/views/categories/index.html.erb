@@ -1,4 +1,14 @@
-<% provide(:title, 'Categories') %>
+<%
+   case params[:record_type]
+      when '1'
+        categories_page_title = 'Income categories'
+      when '0'
+        categories_page_title = 'Expense categories'
+      else
+        categories_page_title = 'Categories'
+      end
+%>
+<% provide(:title, categories_page_title) %>
 <% content_for :main_content do %>
 
   <% if @category.empty? %>
@@ -7,7 +17,11 @@
       You don't have any category. Feel free to add one.
     </div>
 
-  <% else %>
+    <%= link_to 'New Category', { controller: 'categories', action: 'new', record_type: params[:record_type] },
+                class: 'btn btn-primary' %>
+
+
+    <% else %>
     <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading clearfix">
